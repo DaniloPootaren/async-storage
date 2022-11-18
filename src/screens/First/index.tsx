@@ -1,5 +1,6 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {Button} from 'native-base';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,7 +13,8 @@ const styles = StyleSheet.create({
 export const FirstScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>First Screen</Text>
+      <Button>Navigate to Second Screen</Button>
+      <Button mt="5">Logout</Button>
     </View>
   );
 };
