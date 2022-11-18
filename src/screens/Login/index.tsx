@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import {
   Center,
   Box,
@@ -9,6 +9,8 @@ import {
   Button,
   Input,
 } from 'native-base';
+import {useFormik} from 'formik';
+import {Login} from './types/login.type';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,6 +21,10 @@ const styles = StyleSheet.create({
 });
 
 export const LoginScreen = () => {
+  const formik = useFormik({
+    initialValues: {email: '', password: ''},
+    onSubmit: values => Alert.alert('Test', JSON.stringify(values)),
+  });
   return (
     <View style={styles.container}>
       <Center w="100%">
@@ -44,15 +50,24 @@ export const LoginScreen = () => {
           </Heading>
 
           <VStack space={3} mt="5">
-            <FormControl>
+            <FormControl isInvalid={!!formik.errors?.email}>
               <FormControl.Label>Email Address</FormControl.Label>
-              <Input />
+              <Input
+                value={formik.values.email}
+                onChangeText={formik.handleChange('email')}
+              />
             </FormControl>
-            <FormControl>
+            <FormControl isInvalid={!!formik.errors?.password}>
               <FormControl.Label>Password</FormControl.Label>
-              <Input type="password" />
+              <Input
+                value={formik.values.password}
+                type="password"
+                onChangeText={formik.handleChange('password')}
+              />
             </FormControl>
-            <Button mt="2">Login</Button>
+            <Button mt="2" onPress={formik.submitForm}>
+              Login
+            </Button>
           </VStack>
         </Box>
       </Center>
