@@ -8,9 +8,13 @@ export enum StorageKey {
 export const storeData = async (
   key: StorageKey,
   value: string,
+  callback?: () => void,
 ): Promise<void> => {
   try {
     await AsyncStorage.setItem(key, value);
+    if (callback) {
+      callback();
+    }
   } catch (e) {
     Alert.alert('Error', 'Could not store data');
   }
@@ -28,4 +32,11 @@ export const getData = async (
   } catch (e) {
     Alert.alert('Error', 'Could not retrieve data');
   }
+};
+
+export const clearAllData = async () => {
+  try {
+    await AsyncStorage.clear();
+    console.log(await getData(StorageKey.ACCESS_TOKEN));
+  } catch (e) {}
 };
